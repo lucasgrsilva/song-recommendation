@@ -16,3 +16,10 @@ spec:
       - name: recommendation-model-generator
         image: recommendation-model-generator:latest
         command: ["python", "song_recommendation_model_generator.py"]
+        volumeMounts:
+          - mountPath: /app/datasets
+            name: dataset-volume
+      volumes:
+      - name: dataset-volume
+        persistentVolumeClaim:
+          claimName: pvc-lucassilva
