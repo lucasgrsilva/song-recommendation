@@ -23,7 +23,7 @@ def recommend_songs(input_songs):
   
     return list(recommended_songs)
 
-@app.route('/recommend', methods=['POST'])
+@app.route('/api/recommend', methods=['POST'])
 def recommend():
     data = request.get_json()
     input_songs = data.get('songs', [])
