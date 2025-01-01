@@ -10,7 +10,7 @@ def recommend_songs(input_songs):
     model_data = app.model
     recommended_songs = set()
 
-    track_rules = model_data["track_rules"]
+    track_rules = model_data["rules"]
 
     for rule in track_rules:
         if set(rule[0]).issubset(input_songs):

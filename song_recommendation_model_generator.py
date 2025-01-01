@@ -1,41 +1,46 @@
 import pandas as pd
 import pickle
 from fpgrowth_py import fpgrowth
-from datetime import datetime
 
-# Load datasets
-spotfi_1 = pd.read_csv('2023_spotify_ds1.csv')
-spotfi_2 = pd.read_csv('2023_spotify_ds2.csv')
+DATASET_1 = "2023_spotify_ds1.csv"
+DATASET_2 = "2023_spotify_ds2.csv"
+MODEL_FILE = "recommendation_model.pickle"
 
-data = pd.concat([spotfi_1, spotfi_2], ignore_index=True)
+def load_data(file_path):
+    data = pd.read_csv(file_path)
+    transactions = data.groupby('pid')['track_name'].apply(list).tolist()
+    return transactions
 
-track_transactions = data.groupby('pid')['track_name'].apply(list).tolist()
+def generate_rules(transactions, min_sup=0.1, min_conf=0.3):
+    freq_item_set, rules = fpgrowth(transactions, minSupRatio=min_sup, minConf=min_conf)
+    return freq_item_set, rules
 
-# Generate frequent itemsets and association rules using fpgrowth_py
-min_support = 0.1
-min_confidence = 0.2
+print(f"Loading data from {DATASET_1}...")
+transactions_ds1 = load_data(DATASET_1)
 
-track_freq_itemsets, track_rules = fpgrowth(track_transactions, minSupRatio=min_support, minConf=min_confidence)
+print("Training model with dataset 1...")
+freq_item_set_ds1, rules_ds1 = generate_rules(transactions_ds1)
 
-track_popularity = data['track_name'].value_counts()
-
-model_metadata = {
-    "version": "1.0.1",
-    "last_update": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+model = {
+    "freq_item_set": freq_item_set_ds1,
+    "rules": rules_ds1,
+    "track_popularity": {}, 
 }
+print(f"Initial model trained with {len(rules_ds1)} rules.")
 
-model_data = {
-    "metadata": model_metadata,
-    "track_frequent_itemsets": track_freq_itemsets,
-    "track_rules": track_rules,
-    "track_popularity": track_popularity
-}
+if DATASET_2:
+    print(f"Loading data from {DATASET_2}...")
+    transactions_ds2 = load_data(DATASET_2)
+    
+    print("Updating model with dataset 2...")
+    freq_item_set_ds2, rules_ds2 = generate_rules(transactions_ds2)
+    
+    model["rules"].extend(rules_ds2)
+    model["freq_item_set"].extend(freq_item_set_ds2)
+    print(f"Updated model with {len(rules_ds2)} additional rules.")
 
-with open('recommendation_model.pickle', 'wb') as model_file:
-    pickle.dump(model_data, model_file)
+print(f"Saving model to {MODEL_FILE}...")
+with open(MODEL_FILE, "wb") as model_file:
+    pickle.dump(model, model_file)
 
-distinct_antecedents = set()
-for rule in track_rules:
-    distinct_antecedents.update(rule[0])
-
-print(f"Model saved successfully with rules for {len(distinct_antecedents)} distinct songs")
+print(f"Model saved! Total rules: {len(model['rules'])}")
