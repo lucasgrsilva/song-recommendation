@@ -19,3 +19,10 @@ spec:
         ports:
         - containerPort: 52047
         command: ["python", "api.py", "--host=0.0.0.0"]
+        volumeMounts:
+          - mountPath: /app/recommendation
+            name: song-recommendation-api-volume
+      volumes:
+      - name: song-recommendation-api-volume
+        persistentVolumeClaim:
+          claimName: pvc-lucassilva

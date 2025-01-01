@@ -2,9 +2,9 @@ import pandas as pd
 import pickle
 from fpgrowth_py import fpgrowth
 
-DATASET_1 = "2023_spotify_ds1.csv"
-DATASET_2 = "2023_spotify_ds2.csv"
-MODEL_FILE = "recommendation_model.pickle"
+DATASET_1 = "/app/datasets/2023_spotify_ds1.csv"
+DATASET_2 = "/app/datasets/2023_spotify_ds2.csv"
+MODEL_FILE = "/app/datasets/recommendation_model.pickle"
 
 def load_data(file_path):
     data = pd.read_csv(file_path)

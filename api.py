@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, send_file
 
 app = Flask(__name__)
 
-with open('./recommendation_model.pickle', 'rb') as model_file:
+with open('/app/recommendation/recommendation_model.pickle', 'rb') as model_file:
     app.model = pickle.load(model_file)
 
 def recommend_songs(input_songs):
@@ -33,7 +33,7 @@ def recommend():
 
     recommended_songs = recommend_songs(input_songs)
 
-    file_path = './recommendations.txt'
+    file_path = '/app/recommendation/recommendations.txt'
     with open(file_path, 'w') as file:
         for song in recommended_songs:
             file.write(f"{song}\n")
@@ -42,8 +42,8 @@ def recommend():
 
     response = {
         "songs": recommended_songs,
-        "version": app.model["metadata"]["version"],
-        "model_date": app.model["metadata"]["last_update"]
+        # "version": app.model["metadata"]["version"],
+        # "model_date": app.model["metadata"]["last_update"]
     }
 
     return jsonify(response)
