@@ -17,5 +17,5 @@ spec:
       - name: song-recommendation-api
         image: song-recommendation-api:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 52047
         command: ["python", "api.py", "--host=0.0.0.0"]
