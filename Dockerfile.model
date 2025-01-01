@@ -1,0 +1,12 @@
+FROM python:3.9-slim-bullseye
+
+WORKDIR /app
+
+COPY model.py .
+COPY 2023_spotify_ds1.csv .
+COPY 2023_spotify_ds2.csv .
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENTRYPOINT ["python", "song_recommendation_model_generator.py"]

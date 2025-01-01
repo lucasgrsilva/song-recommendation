@@ -1,0 +1,21 @@
+# flask-api-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: song-recommendation-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: song-recommendation-api
+  template:
+    metadata:
+      labels:
+        app: song-recommendation-api
+    spec:
+      containers:
+      - name: song-recommendation-api
+        image: song-recommendation-api:latest
+        ports:
+        - containerPort: 5000
+        command: ["python", "api.py", "--host=0.0.0.0"]

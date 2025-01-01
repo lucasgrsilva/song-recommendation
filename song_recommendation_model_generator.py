@@ -12,7 +12,7 @@ data = pd.concat([spotfi_1, spotfi_2], ignore_index=True)
 track_transactions = data.groupby('pid')['track_name'].apply(list).tolist()
 
 # Generate frequent itemsets and association rules using fpgrowth_py
-min_support = 0.05
+min_support = 0.1
 min_confidence = 0.2
 
 track_freq_itemsets, track_rules = fpgrowth(track_transactions, minSupRatio=min_support, minConf=min_confidence)

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-model-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation-model-generator
+  template:
+    metadata:
+      labels:
+        app: recommendation-model-generator
+    spec:
+      containers:
+      - name: recommendation-model-generator
+        image: recommendation-model-generator:latest
+        command: ["python", "song_recommendation_model_generator.py"]
