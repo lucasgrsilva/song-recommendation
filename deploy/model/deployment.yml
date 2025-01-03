@@ -1,21 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: recommendation-model-generator
+  name: lucassilva-recommendation-model-generator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: recommendation-model-generator
+      app: lucassilva-recommendation-model-generator
   template:
     metadata:
       labels:
-        app: recommendation-model-generator
+        app: lucassilva-recommendation-model-generator
     spec:
       containers:
-      - name: recommendation-model-generator
-        image: recommendation-model-generator:latest
-        command: ["python", "song_recommendation_model_generator.py"]
+      - name: lucassilva-recommendation-model-generator
+        image: recommendation-model-generator:1.0.0
         volumeMounts:
           - mountPath: /app/datasets
             name: dataset-volume
