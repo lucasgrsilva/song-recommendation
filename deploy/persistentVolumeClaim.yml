@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc-lucassilva
 spec:
+  storageClassName: default-storage-class-lucassilva
   selector:
     matchLabels:
       namespace: lucassilva
