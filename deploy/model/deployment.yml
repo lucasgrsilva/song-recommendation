@@ -21,4 +21,4 @@ spec:
       volumes:
       - name: dataset-volume
         persistentVolumeClaim:
-          claimName: pvc-lucassilva
+          claimName: project2-pvc-lucassilva

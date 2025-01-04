@@ -24,4 +24,4 @@ spec:
       volumes:
       - name: song-recommendation-api-volume
         persistentVolumeClaim:
-          claimName: pvc-lucassilva
+          claimName: project2-pvc-lucassilva
