@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-lucassilva
+  name: project2-pvc-lucassilva
 spec:
   storageClassName: default-storage-class-lucassilva
+  volumeName: project2-pv2-lucassilva
   selector:
     matchLabels:
       namespace: lucassilva
