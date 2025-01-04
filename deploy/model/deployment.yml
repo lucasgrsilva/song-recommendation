@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: lucassilva-recommendation-model-generator
-        image: recommendation-model-generator:1.0.0
+        image: lucasgabrios/recommendation-model-generator:1.0.1
         volumeMounts:
           - mountPath: /app/datasets
             name: dataset-volume

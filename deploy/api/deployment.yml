@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: lucassilva-song-recommendation-api
-        image: song-recommendation-api:1.0.0
+        image: lucasgabrios/song-recommendation-api:1.0.0
         ports:
         - containerPort: 52047
         volumeMounts:
