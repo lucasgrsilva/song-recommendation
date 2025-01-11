@@ -1,12 +1,8 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: lucassilva-recommendation-model-generator
+  generateName: lucassilva-recommendation-model-generator-
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: lucassilva-recommendation-model-generator
   template:
     metadata:
       labels:
@@ -16,9 +12,11 @@ spec:
       - name: lucassilva-recommendation-model-generator
         image: lucasgabrios/playlists-recommender-model:1.0.2
         volumeMounts:
-          - mountPath: /app/datasets
-            name: dataset-volume
+        - mountPath: /app/datasets
+          name: name: dataset-volume
+      restartPolicy: Never
       volumes:
       - name: dataset-volume
         persistentVolumeClaim:
           claimName: project2-pvc-lucassilva
+  backoffLimit: 3
