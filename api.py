@@ -14,7 +14,7 @@ model = None
 
 def load_model():
     global model
-    print(f"Loading model from {MODEL_PATH}")
+    app.logger.info(f"Loading model from {MODEL_PATH}")
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
 
@@ -23,7 +23,7 @@ def get_file_checksum(filepath):
         return hashlib.md5(f.read()).hexdigest()        
     
 def update_model():
-    print("Updating model :)")
+    app.logger.info("Updating model :)")
     global model_last_update
     model_last_update = time.time()
     load_model()
@@ -51,7 +51,7 @@ def recommend():
     global last_checksum
 
     new_checksum = get_file_checksum(MODEL_PATH)
-    print(f"M=recommend, last_checksum={last_checksum}, new_checksum={new_checksum}")
+    app.logger.info(f"M=recommend, last_checksum={last_checksum}, new_checksum={new_checksum}, model_path={MODEL_PATH}")
     if new_checksum != last_checksum:
         last_checksum = new_checksum
         update_model()
@@ -80,4 +80,4 @@ def recommend():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
