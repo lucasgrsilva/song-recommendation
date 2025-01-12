@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: lucassilva-recommendation-model-generator-15-43
+  name: lucassilva-recommendation-model-generator-15-53
 spec:
   template:
     metadata:
