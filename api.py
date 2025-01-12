@@ -72,6 +72,7 @@ def model_watcher():
     while True:
         if os.path.exists(MODEL_PATH):
             new_checksum = get_file_checksum(MODEL_PATH)
+            print(new_checksum)
             if new_checksum != last_checksum:
                 print("Updating model :)")
                 last_checksum = new_checksum
