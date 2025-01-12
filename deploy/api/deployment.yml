@@ -15,12 +15,18 @@ spec:
     spec:
       containers:
       - name: lucassilva-song-recommendation-api
-        image: lucasgabrios/playlists-recommender-api:1.0.0
+        image: lucasgabrios/playlists-recommender-api:1.0.2
         ports:
         - containerPort: 52047
         volumeMounts:
           - mountPath: /app/recommendation
             name: song-recommendation-api-volume
+        env:
+        - name: APP_VERSION
+          valueFrom:
+            configMapKeyRef:
+              name: recomendation-api-config
+              key: version
       volumes:
       - name: song-recommendation-api-volume
         persistentVolumeClaim:

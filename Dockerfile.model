@@ -7,4 +7,4 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT ["python", "song_recommendation_model_generator.py"]
+ENTRYPOINT python song_recommendation_model_generator.py --dataset-path="$DATASET_PATH"

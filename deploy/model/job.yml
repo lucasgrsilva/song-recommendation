@@ -14,6 +14,12 @@ spec:
         volumeMounts:
         - mountPath: /app/datasets
           name: dataset-volume
+        env:
+        - name: DATASET_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: recomendation-model-config
+              key: dataset_path
       restartPolicy: Never
       volumes:
       - name: dataset-volume
