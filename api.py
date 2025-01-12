@@ -51,6 +51,7 @@ def recommend():
     global last_checksum
 
     new_checksum = get_file_checksum(MODEL_PATH)
+    print(f"M=recommend, last_checksum={last_checksum}, new_checksum={new_checksum}")
     if new_checksum != last_checksum:
         last_checksum = new_checksum
         update_model()
