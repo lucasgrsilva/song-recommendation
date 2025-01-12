@@ -77,10 +77,11 @@ def model_watcher():
                 last_checksum = new_checksum
                 model_last_update = time.time()
                 load_model()
+        else:
+            print(f"Model not found in {MODEL_PATH} :(")
         time.sleep(5)
 
 if __name__ == '__main__':
-    load_model()
     watcher_thread = threading.Thread(target=model_watcher, daemon=True)
     watcher_thread.start()
     app.run(host="0.0.0.0", port=30555)

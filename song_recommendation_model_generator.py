@@ -7,9 +7,7 @@ from fpgrowth_py import fpgrowth
 MODEL_FILE = "/app/datasets/recommendation_model.pickle"
 
 def load_data(file_path):
-    data = pd.read_csv(file_path)
-    transactions = data.groupby('pid')['track_name'].apply(list).tolist()
-    return transactions
+    return pd.read_csv(file_path)
 
 def generate_rules(transactions, min_sup=0.1, min_conf=0.3):
     freq_item_set, rules = fpgrowth(transactions, minSupRatio=min_sup, minConf=min_conf)
@@ -23,15 +21,18 @@ def main(dataset_path):
         return
 
     print(f"Loading data from {dataset_path}...")
-    transactions_ds = load_data(dataset_path)
+    data = load_data(dataset_path)
+    transactions_ds = data.groupby('pid')['track_name'].apply(list).tolist()
 
     print("Training model with dataset...")
     freq_item_set_ds, rules_ds = generate_rules(transactions_ds)
 
+    track_popularity = data['track_name'].value_counts()
+
     model = {
         "freq_item_set": freq_item_set_ds,
         "rules": rules_ds,
-        "track_popularity": {}, 
+        "track_popularity": track_popularity, 
     }
     print(f"Model trained with {len(rules_ds)} rules.")
 
