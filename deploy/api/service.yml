@@ -4,7 +4,7 @@ metadata:
   name: song-recommendation-api-service
 spec:
   selector:
-    app.kubernetes.io/name: lucassilva-song-recommendation-api
+    app: lucassilva-song-recommendation-api
   ports:
     - protocol: TCP
       port: 30555
