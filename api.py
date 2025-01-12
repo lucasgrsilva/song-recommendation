@@ -3,7 +3,6 @@ import os
 import hashlib
 import time
 import datetime
-import threading
 from flask import Flask, request, jsonify, send_file
 
 app = Flask(__name__)
@@ -22,6 +21,12 @@ def load_model():
 def get_file_checksum(filepath):
     with open(filepath, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()        
+    
+def update_model():
+    print("Updating model :)")
+    global model_last_update
+    model_last_update = time.time()
+    load_model()
 
 def recommend_songs(input_songs):
     global model
@@ -43,6 +48,13 @@ def recommend_songs(input_songs):
 @app.route('/api/recommend', methods=['POST'])
 def recommend():
     global model_last_update
+    global last_checksum
+
+    new_checksum = get_file_checksum(MODEL_PATH)
+    if new_checksum != last_checksum:
+        last_checksum = new_checksum
+        update_model()
+
     data = request.get_json()
     input_songs = data.get('songs', [])
     
@@ -66,23 +78,5 @@ def recommend():
 
     return jsonify(response)
 
-def model_watcher():
-    global last_checksum
-    global model_last_update
-    while True:
-        if os.path.exists(MODEL_PATH):
-            new_checksum = get_file_checksum(MODEL_PATH)
-            print(new_checksum)
-            if new_checksum != last_checksum:
-                print("Updating model :)")
-                last_checksum = new_checksum
-                model_last_update = time.time()
-                load_model()
-        else:
-            print(f"Model not found in {MODEL_PATH} :(")
-        time.sleep(5)
-
 if __name__ == '__main__':
-    watcher_thread = threading.Thread(target=model_watcher, daemon=True)
-    watcher_thread.start()
-    app.run(host="0.0.0.0", port=30555)
+    app.run()
