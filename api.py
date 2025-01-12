@@ -80,6 +80,7 @@ def model_watcher():
         time.sleep(5)
 
 if __name__ == '__main__':
+    load_model()
     watcher_thread = threading.Thread(target=model_watcher, daemon=True)
     watcher_thread.start()
     app.run(host="0.0.0.0", port=30555)
