@@ -4,4 +4,3 @@ metadata:
   name: recomendation-model-config
 data:
   dataset_path: "/app/datasets/2023_spotify_ds1.csv"
-  version: "1.0.2"
