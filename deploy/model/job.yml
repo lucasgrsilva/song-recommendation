@@ -13,7 +13,7 @@ spec:
         image: lucasgabrios/playlists-recommender-model:1.0.2
         volumeMounts:
         - mountPath: /app/datasets
-          name: name: dataset-volume
+          name: dataset-volume
       restartPolicy: Never
       volumes:
       - name: dataset-volume
