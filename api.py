@@ -45,7 +45,7 @@ def recommend_songs(input_songs):
   
     return list(recommended_songs)[:10]
 
-@app.route('/api/recommend', methods=['POST'])
+@app.route('/api/recommender', methods=['POST'])
 def recommend():
     global model_last_update
     global last_checksum
@@ -73,4 +73,4 @@ def recommend():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
