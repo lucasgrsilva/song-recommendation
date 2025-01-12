@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: lucassilva-recommendation-model-generator
-        image: lucasgabrios/playlists-recommender-model:1.0.3
+        image: lucasgabrios/playlists-recommender-model:1.0.4
         volumeMounts:
         - mountPath: /app/datasets
           name: dataset-volume
