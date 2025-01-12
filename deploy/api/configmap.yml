@@ -4,4 +4,4 @@ metadata:
   name: recomendation-api-config
 data:
   model_path: "/app/recommendation_model.pickle"
-  version: "1.0.8"
+  version: "1.0.9"
