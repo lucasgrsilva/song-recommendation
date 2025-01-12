@@ -2,6 +2,8 @@ import pandas as pd
 import os
 import argparse
 import pickle
+import pytz
+from datetime import datetime
 from fpgrowth_py import fpgrowth
 
 MODEL_FILE = "/app/datasets/recommendation_model.pickle"
@@ -33,6 +35,7 @@ def main(dataset_path):
         "freq_item_set": freq_item_set_ds,
         "rules": rules_ds,
         "track_popularity": track_popularity, 
+        "last_update": datetime.now(pytz.timezone('America/Sao_Paulo')).strftime('%Y-%m-%d %H:%M:%S')
     }
     print(f"Model trained with {len(rules_ds)} rules.")
 

@@ -1,15 +1,12 @@
 import pickle
 import os
 import hashlib
-import time
-import datetime
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 MODEL_PATH = os.getenv("MODEL_PATH")
 APP_VERSION = os.getenv("APP_VERSION")
 last_checksum = None
-model_last_update = None
 model = None
 
 def load_model():
@@ -22,12 +19,6 @@ def get_file_checksum(filepath):
     with open(filepath, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()        
     
-def update_model():
-    app.logger.info("Updating model :)")
-    global model_last_update
-    model_last_update = time.time()
-    load_model()
-
 def recommend_songs(input_songs):
     global model
     recommended_songs = set()
@@ -47,14 +38,14 @@ def recommend_songs(input_songs):
 
 @app.route('/api/recommender', methods=['POST'])
 def recommend():
-    global model_last_update
     global last_checksum
 
     new_checksum = get_file_checksum(MODEL_PATH)
     app.logger.info(f"M=recommend, last_checksum={last_checksum}, new_checksum={new_checksum}, model_path={MODEL_PATH}")
     if new_checksum != last_checksum:
         last_checksum = new_checksum
-        update_model()
+        app.logger.info("Updating model :)")
+        load_model()
 
     data = request.get_json()
     input_songs = data.get('songs', [])
@@ -67,7 +58,7 @@ def recommend():
     response = {
         "songs": recommended_songs,
         "version": APP_VERSION,
-        "model_date": datetime.datetime.fromtimestamp(model_last_update).strftime('%Y-%m-%d %H:%M:%S')
+        "model_date": model["last_update"]
     }
 
     return jsonify(response)
