@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: recomendation-model-config
 data:
-  dataset_path: "/app/datasets/2023_spotify_ds1.csv"
+  dataset_path: "/app/datasets/2023_spotify_ds2.csv"
