@@ -14,25 +14,25 @@ spec:
         app: lucassilva-song-recommendation-api
     spec:
       containers:
-      - name: lucassilva-song-recommendation-api
-        image: lucasgabrios/playlists-recommender-api:1.0.10
-        ports:
-        - containerPort: 30555
-        volumeMounts:
-          - mountPath: /app/recommendation
-            name: song-recommendation-api-volume
-        env:
-        - name: APP_VERSION
-          valueFrom:
-            configMapKeyRef:
-              name: recomendation-api-config
-              key: version
-        - name: MODEL_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: recomendation-api-config
-              key: model_path
+        - name: lucassilva-song-recommendation-api
+          image: lucasgabrios/playlists-recommender-api:1.0.11
+          ports:
+            - containerPort: 30555
+          volumeMounts:
+            - mountPath: /app/recommendation
+              name: song-recommendation-api-volume
+          env:
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: recomendation-api-config
+                  key: version
+            - name: MODEL_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: recomendation-api-config
+                  key: model_path
       volumes:
-      - name: song-recommendation-api-volume
-        persistentVolumeClaim:
-          claimName: project2-pvc-lucassilva
+        - name: song-recommendation-api-volume
+          persistentVolumeClaim:
+            claimName: project2-pvc-lucassilva
