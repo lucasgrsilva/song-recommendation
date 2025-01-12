@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: recomendation-api-config
 data:
+  model_path: "/app/datasets/recommendation_model.pickle"
   version: "1.0.5"
