@@ -3,7 +3,7 @@ import os
 import hashlib
 import time
 import datetime
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 MODEL_PATH = os.getenv("MODEL_PATH")
@@ -43,7 +43,7 @@ def recommend_songs(input_songs):
     if not recommended_songs:
         recommended_songs = [song for song in model["track_popularity"].index if song not in input_songs]
   
-    return list(recommended_songs)
+    return list(recommended_songs)[:10]
 
 @app.route('/api/recommend', methods=['POST'])
 def recommend():
@@ -63,13 +63,6 @@ def recommend():
         return jsonify({"error": "No songs provided"}), 400
 
     recommended_songs = recommend_songs(input_songs)
-
-    file_path = '/app/recommendation/recommendations.txt'
-    with open(file_path, 'w') as file:
-        for song in recommended_songs:
-            file.write(f"{song}\n")
-
-    send_file(file_path, as_attachment=True)
 
     response = {
         "songs": recommended_songs,
