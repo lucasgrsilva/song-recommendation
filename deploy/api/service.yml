@@ -8,4 +8,4 @@ spec:
   ports:
     - protocol: TCP
       port: 30555
-      targetPort: 52047
+      targetPort: 30555
